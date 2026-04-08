@@ -1,0 +1,4 @@
+deepcoin-cli
+*.exe
+.env
+dist/
