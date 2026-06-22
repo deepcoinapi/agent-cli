@@ -22,10 +22,22 @@ Command-line tool for interacting with the [DeepCoin](https://api.deepcoin.com) 
 ## Installation
 
 ```bash
+curl -fsSL https://raw.githubusercontent.com/deepcoinapi/agent-cli/main/install.sh | sh
+```
+
+Install to a custom directory:
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/deepcoinapi/agent-cli/main/install.sh | sh -s -- -b ~/.local/bin
+```
+
+Or install from source with Go:
+
+```bash
 go install github.com/deepcoinapi/agent-cli/cmd/dcli@latest
 ```
 
-Or build from source:
+Or build from a local checkout:
 
 ```bash
 git clone https://github.com/deepcoinapi/agent-cli.git

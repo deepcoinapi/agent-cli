@@ -1,0 +1,96 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - "v*"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    name: Build ${{ matrix.goos }} ${{ matrix.goarch }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - goos: linux
+            goarch: amd64
+            os_name: Linux
+            arch_name: x86_64
+          - goos: linux
+            goarch: arm64
+            os_name: Linux
+            arch_name: arm64
+          - goos: darwin
+            goarch: amd64
+            os_name: Darwin
+            arch_name: x86_64
+          - goos: darwin
+            goarch: arm64
+            os_name: Darwin
+            arch_name: arm64
+          - goos: windows
+            goarch: amd64
+            os_name: Windows
+            arch_name: x86_64
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Go
+        uses: actions/setup-go@v5
+        with:
+          go-version-file: go.mod
+
+      - name: Build
+        env:
+          GOOS: ${{ matrix.goos }}
+          GOARCH: ${{ matrix.goarch }}
+          CGO_ENABLED: "0"
+        run: |
+          mkdir -p dist
+          if [ "$GOOS" = "windows" ]; then
+            go build -trimpath -ldflags "-s -w" -o dist/dcli.exe ./cmd/dcli
+          else
+            go build -trimpath -ldflags "-s -w" -o dist/dcli ./cmd/dcli
+          fi
+
+      - name: Package
+        run: |
+          cd dist
+          if [ "${{ matrix.goos }}" = "windows" ]; then
+            zip "dcli_${{ matrix.os_name }}_${{ matrix.arch_name }}.zip" dcli.exe
+          else
+            tar -czf "dcli_${{ matrix.os_name }}_${{ matrix.arch_name }}.tar.gz" dcli
+          fi
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: dcli-${{ matrix.os_name }}-${{ matrix.arch_name }}
+          path: |
+            dist/*.tar.gz
+            dist/*.zip
+
+  release:
+    name: Publish release
+    needs: build
+    runs-on: ubuntu-latest
+    if: startsWith(github.ref, 'refs/tags/')
+    steps:
+      - name: Download artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: dist
+          merge-multiple: true
+
+      - name: Publish GitHub release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: dist/*
+          generate_release_notes: true
