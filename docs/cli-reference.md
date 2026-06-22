@@ -1,15 +1,22 @@
 # DeepCoin CLI Reference
 
-## Global Options
+## Configuration
 
-| Option | Env Var | Description |
-|--------|---------|-------------|
-| `--api-key` | `DEEPCOIN_API_KEY` | API key for authentication |
-| `--secret-key` | `DEEPCOIN_SECRET_KEY` | Secret key for signing |
-| `--passphrase` | `DEEPCOIN_PASSPHRASE` | API passphrase |
-| `--base-url` | `DEEPCOIN_BASE_URL` | API base URL (default: `https://api.deepcoin.com`) |
-| `--version` | | Show version |
-| `--help` | | Show help |
+The CLI reads credentials and base URL from environment variables.
+
+| Purpose | Preferred Env Var | Alias | Description |
+|---------|-------------------|-------|-------------|
+| API key | `DEEPCOIN_API_KEY` | `DC_API_KEY` | API key for authentication |
+| Secret key | `DEEPCOIN_SECRET_KEY` | `DC_SECRET_KEY` | Secret key for signing |
+| Passphrase | `DEEPCOIN_PASSPHRASE` | `DC_PASSPHRASE` | API passphrase |
+| Base URL | `DEEPCOIN_BASE_URL` | `DC_BASE_URL` | API base URL (default: `https://api.deepcoin.com`) |
+
+Global command flags:
+
+| Option | Description |
+|--------|-------------|
+| `--version` | Show version |
+| `--help` | Show help |
 
 Compatibility aliases are also supported: `DC_API_KEY`, `DC_SECRET_KEY`, `DC_PASSPHRASE`, and `DC_BASE_URL`.
 

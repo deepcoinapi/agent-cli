@@ -47,7 +47,7 @@ go build -o dcli .
 
 ## Configuration
 
-Set your API credentials via environment variables or a `.env` file:
+Set your API credentials via environment variables:
 
 ```bash
 export DEEPCOIN_API_KEY=your-api-key
@@ -57,8 +57,6 @@ export DEEPCOIN_BASE_URL=https://api.deepcoin.com  # optional
 ```
 
 The CLI also accepts `DC_API_KEY`, `DC_SECRET_KEY`, `DC_PASSPHRASE`, and `DC_BASE_URL` as compatibility aliases.
-
-Or copy `.env.example` to `.env` and fill in your credentials.
 
 ## Quick Start
 
