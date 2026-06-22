@@ -13,16 +13,16 @@ Command-line tool for interacting with the [DeepCoin](https://api.deepcoin.com) 
 
 ## Agent-Skill Contract
 
-`deepcoin-cli` is the stable execution layer for Deepcoin agent skills.
+`dcli` is the stable execution layer for Deepcoin agent skills.
 
-- Use `deepcoin-cli list-tools` for a machine-readable command inventory.
+- Use `dcli list-tools` for a machine-readable command inventory.
 - Agent skills should call CLI commands instead of generating temporary API clients or signing scripts.
 - If a Deepcoin API workflow is not represented here, add a stable CLI command first, then reference it from the skill.
 
 ## Installation
 
 ```bash
-go install github.com/deepcoinapi/agent-cli@latest
+go install github.com/deepcoinapi/agent-cli/cmd/dcli@latest
 ```
 
 Or build from source:
@@ -30,7 +30,7 @@ Or build from source:
 ```bash
 git clone https://github.com/deepcoinapi/agent-cli.git
 cd agent-cli
-go build -o deepcoin-cli .
+go build -o dcli .
 ```
 
 ## Configuration
@@ -52,16 +52,16 @@ Or copy `.env.example` to `.env` and fill in your credentials.
 
 ```bash
 # Check connectivity
-deepcoin-cli market ping
+dcli market ping
 
 # Get BTC ticker
-deepcoin-cli market ticker BTC-USDT-SWAP
+dcli market ticker BTC-USDT-SWAP
 
 # Get account balance
-deepcoin-cli account balance --inst-type SWAP
+dcli account balance --inst-type SWAP
 
 # Place a limit order
-deepcoin-cli trade place-order \
+dcli trade place-order \
   --inst-id BTC-USDT-SWAP \
   --td-mode isolated \
   --side buy \
@@ -72,10 +72,10 @@ deepcoin-cli trade place-order \
   --mrg-position merge
 
 # View open positions
-deepcoin-cli account positions --inst-type SWAP
+dcli account positions --inst-type SWAP
 
 # Run a strategy backtest
-deepcoin-cli strategy backtest \
+dcli strategy backtest \
   --symbol BTC-USDT-SWAP \
   --from-ts 2025-01-01T00:00:00Z \
   --to-ts 2025-03-01T00:00:00Z \
@@ -94,14 +94,14 @@ deepcoin-cli strategy backtest \
 | `strategy` | DSL strategy orders & backtesting (auth required) |
 | `list-tools` | Machine-readable stable command inventory for agents |
 
-Run `deepcoin-cli <group> --help` to see all commands in a group.
+Run `dcli <group> --help` to see all commands in a group.
 
 ## JSON Output
 
 All commands support `--json` flag for raw JSON output, useful for piping to other tools:
 
 ```bash
-deepcoin-cli market tickers --inst-type SWAP --json | jq '.data[0]'
+dcli market tickers --inst-type SWAP --json | jq '.data[0]'
 ```
 
 ## Full CLI Reference

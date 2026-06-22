@@ -16,7 +16,7 @@ Compatibility aliases are also supported: `DC_API_KEY`, `DC_SECRET_KEY`, `DC_PAS
 ## Agent Discovery
 
 ```bash
-deepcoin-cli list-tools
+dcli list-tools
 ```
 
 Prints a machine-readable JSON inventory of stable commands for Deepcoin skills. Agents should use this command surface instead of assembling custom API scripts.
@@ -32,8 +32,8 @@ No authentication required.
 List tradeable instruments.
 
 ```bash
-deepcoin-cli market instruments --inst-type SWAP
-deepcoin-cli market instruments --inst-type SPOT --inst-id BTC-USDT
+dcli market instruments --inst-type SWAP
+dcli market instruments --inst-type SPOT --inst-id BTC-USDT
 ```
 
 | Option | Required | Description |
@@ -47,7 +47,7 @@ deepcoin-cli market instruments --inst-type SPOT --inst-id BTC-USDT
 Get market tickers for all instruments.
 
 ```bash
-deepcoin-cli market tickers --inst-type SWAP
+dcli market tickers --inst-type SWAP
 ```
 
 | Option | Required | Description |
@@ -60,7 +60,7 @@ deepcoin-cli market tickers --inst-type SWAP
 Get ticker for a single instrument.
 
 ```bash
-deepcoin-cli market ticker BTC-USDT-SWAP
+dcli market ticker BTC-USDT-SWAP
 ```
 
 ### `market orderbook <INST_ID>`
@@ -68,7 +68,7 @@ deepcoin-cli market ticker BTC-USDT-SWAP
 Get order book depth.
 
 ```bash
-deepcoin-cli market orderbook BTC-USDT-SWAP --sz 50
+dcli market orderbook BTC-USDT-SWAP --sz 50
 ```
 
 | Option | Required | Description |
@@ -81,7 +81,7 @@ deepcoin-cli market orderbook BTC-USDT-SWAP --sz 50
 Get K-line / candlestick data.
 
 ```bash
-deepcoin-cli market candles BTC-USDT-SWAP --bar 1H --limit 50
+dcli market candles BTC-USDT-SWAP --bar 1H --limit 50
 ```
 
 | Option | Required | Description |
@@ -96,7 +96,7 @@ deepcoin-cli market candles BTC-USDT-SWAP --bar 1H --limit 50
 Get recent trades.
 
 ```bash
-deepcoin-cli market trades BTC-USDT-SWAP --limit 20
+dcli market trades BTC-USDT-SWAP --limit 20
 ```
 
 | Option | Required | Description |
@@ -110,8 +110,8 @@ deepcoin-cli market trades BTC-USDT-SWAP --limit 20
 Get current funding rates.
 
 ```bash
-deepcoin-cli market funding-rate --inst-type SwapU
-deepcoin-cli market funding-rate --inst-type SwapU --inst-id BTCUSDT
+dcli market funding-rate --inst-type SwapU
+dcli market funding-rate --inst-type SwapU --inst-id BTCUSDT
 ```
 
 | Option | Required | Description |
@@ -124,7 +124,7 @@ deepcoin-cli market funding-rate --inst-type SwapU --inst-id BTCUSDT
 Get historical funding rates.
 
 ```bash
-deepcoin-cli market funding-rate-history BTCUSDT --size 50
+dcli market funding-rate-history BTCUSDT --size 50
 ```
 
 ### `market book-spread <INST_ID>`
@@ -155,7 +155,7 @@ Place a new order.
 
 ```bash
 # Limit order
-deepcoin-cli trade place-order \
+dcli trade place-order \
   --inst-id BTC-USDT-SWAP \
   --td-mode isolated \
   --side buy \
@@ -166,7 +166,7 @@ deepcoin-cli trade place-order \
   --mrg-position merge
 
 # Market order
-deepcoin-cli trade place-order \
+dcli trade place-order \
   --inst-id BTC-USDT \
   --td-mode cash \
   --side buy \
@@ -195,7 +195,7 @@ deepcoin-cli trade place-order \
 Place multiple orders at once (max 5).
 
 ```bash
-deepcoin-cli trade batch-orders --orders '[{"instId":"BTC-USDT-SWAP","tdMode":"isolated","side":"buy","ordType":"limit","sz":"1","px":"60000","posSide":"long","mrgPosition":"merge"}]'
+dcli trade batch-orders --orders '[{"instId":"BTC-USDT-SWAP","tdMode":"isolated","side":"buy","ordType":"limit","sz":"1","px":"60000","posSide":"long","mrgPosition":"merge"}]'
 ```
 
 ### `trade cancel-order`
@@ -203,7 +203,7 @@ deepcoin-cli trade batch-orders --orders '[{"instId":"BTC-USDT-SWAP","tdMode":"i
 Cancel an existing order.
 
 ```bash
-deepcoin-cli trade cancel-order --inst-id BTC-USDT-SWAP --ord-id 1000587866272245
+dcli trade cancel-order --inst-id BTC-USDT-SWAP --ord-id 1000587866272245
 ```
 
 ### `trade batch-cancel`
@@ -211,7 +211,7 @@ deepcoin-cli trade cancel-order --inst-id BTC-USDT-SWAP --ord-id 100058786627224
 Cancel multiple orders (max 50).
 
 ```bash
-deepcoin-cli trade batch-cancel --order-ids "123,456,789"
+dcli trade batch-cancel --order-ids "123,456,789"
 ```
 
 ### `trade cancel-all`
@@ -219,7 +219,7 @@ deepcoin-cli trade batch-cancel --order-ids "123,456,789"
 Cancel all orders for a product group.
 
 ```bash
-deepcoin-cli trade cancel-all --product-group SwapU
+dcli trade cancel-all --product-group SwapU
 ```
 
 ### `trade amend-order`
@@ -227,7 +227,7 @@ deepcoin-cli trade cancel-all --product-group SwapU
 Modify an existing order's price or volume.
 
 ```bash
-deepcoin-cli trade amend-order --order-id 123456 --price 61000
+dcli trade amend-order --order-id 123456 --price 61000
 ```
 
 ### `trade amend-order-sltp`
@@ -235,7 +235,7 @@ deepcoin-cli trade amend-order --order-id 123456 --price 61000
 Modify TP/SL on an existing order.
 
 ```bash
-deepcoin-cli trade amend-order-sltp --order-id 123456 --tp-trigger-px 65000
+dcli trade amend-order-sltp --order-id 123456 --tp-trigger-px 65000
 ```
 
 ### `trade get-order`
@@ -243,7 +243,7 @@ deepcoin-cli trade amend-order-sltp --order-id 123456 --tp-trigger-px 65000
 Get details of a specific order.
 
 ```bash
-deepcoin-cli trade get-order --inst-id BTC-USDT-SWAP --ord-id 123456
+dcli trade get-order --inst-id BTC-USDT-SWAP --ord-id 123456
 ```
 
 ### `trade get-history-order`
@@ -255,7 +255,7 @@ Get a historical (finished) order by ID.
 List pending (open) orders.
 
 ```bash
-deepcoin-cli trade pending-orders --inst-id BTC-USDT-SWAP --limit 50
+dcli trade pending-orders --inst-id BTC-USDT-SWAP --limit 50
 ```
 
 ### `trade order-history`
@@ -263,7 +263,7 @@ deepcoin-cli trade pending-orders --inst-id BTC-USDT-SWAP --limit 50
 Get order history.
 
 ```bash
-deepcoin-cli trade order-history --inst-type SWAP --state filled --limit 20
+dcli trade order-history --inst-type SWAP --state filled --limit 20
 ```
 
 | Option | Required | Description |
@@ -283,7 +283,7 @@ Query multiple orders at once (max 5).
 Get trade fill history.
 
 ```bash
-deepcoin-cli trade fills --inst-type SWAP --inst-id BTC-USDT-SWAP
+dcli trade fills --inst-type SWAP --inst-id BTC-USDT-SWAP
 ```
 
 ### `trade trigger-order`
@@ -291,7 +291,7 @@ deepcoin-cli trade fills --inst-type SWAP --inst-id BTC-USDT-SWAP
 Place a trigger (conditional) order.
 
 ```bash
-deepcoin-cli trade trigger-order \
+dcli trade trigger-order \
   --inst-id BTC-USDT-SWAP \
   --product-group SwapU \
   --side buy \
@@ -321,7 +321,7 @@ Get trigger order history.
 Set take-profit / stop-loss on a position.
 
 ```bash
-deepcoin-cli trade set-position-sltp \
+dcli trade set-position-sltp \
   --inst-type SWAP \
   --inst-id BTC-USDT-SWAP \
   --pos-side long \
@@ -342,7 +342,7 @@ Cancel TP/SL on a position.
 Close positions by IDs.
 
 ```bash
-deepcoin-cli trade close-position --inst-id BTC-USDT-SWAP --product-group SwapU --position-ids "123,456"
+dcli trade close-position --inst-id BTC-USDT-SWAP --product-group SwapU --position-ids "123,456"
 ```
 
 ### `trade batch-close-position`
@@ -368,8 +368,8 @@ All commands require authentication.
 Get account balance.
 
 ```bash
-deepcoin-cli account balance
-deepcoin-cli account balance --inst-type SWAP --ccy USDT
+dcli account balance
+dcli account balance --inst-type SWAP --ccy USDT
 ```
 
 | Option | Required | Description |
@@ -382,7 +382,7 @@ deepcoin-cli account balance --inst-type SWAP --ccy USDT
 Get open positions.
 
 ```bash
-deepcoin-cli account positions --inst-type SWAP
+dcli account positions --inst-type SWAP
 ```
 
 ### `account bills`
@@ -390,7 +390,7 @@ deepcoin-cli account positions --inst-type SWAP
 Get account bill history.
 
 ```bash
-deepcoin-cli account bills --inst-type SWAP --limit 50
+dcli account bills --inst-type SWAP --limit 50
 ```
 
 ### `account set-leverage`
@@ -398,7 +398,7 @@ deepcoin-cli account bills --inst-type SWAP --limit 50
 Set leverage for an instrument.
 
 ```bash
-deepcoin-cli account set-leverage --inst-id BTC-USDT-SWAP --lever 10 --mgn-mode isolated
+dcli account set-leverage --inst-id BTC-USDT-SWAP --lever 10 --mgn-mode isolated
 ```
 
 ### `account uid`
@@ -418,7 +418,7 @@ Get total balance across sub-accounts.
 Transfer between sub-accounts.
 
 ```bash
-deepcoin-cli account sub-account-transfer \
+dcli account sub-account-transfer \
   --from-uid 111 --to-uid 222 \
   --from-id 1 --to-id 1 \
   --amount 100 --coin USDT
@@ -441,7 +441,7 @@ Get withdrawal history.
 Transfer assets between accounts.
 
 ```bash
-deepcoin-cli account transfer --currency-id USDT --amount 100 --from-id 1 --to-id 2
+dcli account transfer --currency-id USDT --amount 100 --from-id 1 --to-id 2
 ```
 
 ### `account recharge-chains`
@@ -487,7 +487,7 @@ All commands require authentication. Confirm externally before `create` or `canc
 Get aggregated withdrawal config, optionally including whitelist addresses.
 
 ```bash
-deepcoin-cli withdrawal config --ccy USDT --include-addresses true
+dcli withdrawal config --ccy USDT --include-addresses true
 ```
 
 ### `withdrawal assets`
@@ -495,7 +495,7 @@ deepcoin-cli withdrawal config --ccy USDT --include-addresses true
 List withdrawable assets.
 
 ```bash
-deepcoin-cli withdrawal assets --ccy USDT
+dcli withdrawal assets --ccy USDT
 ```
 
 ### `withdrawal chains`
@@ -503,7 +503,7 @@ deepcoin-cli withdrawal assets --ccy USDT
 List withdrawal chains for a coin.
 
 ```bash
-deepcoin-cli withdrawal chains --ccy USDT
+dcli withdrawal chains --ccy USDT
 ```
 
 ### `withdrawal addresses`
@@ -511,7 +511,7 @@ deepcoin-cli withdrawal chains --ccy USDT
 List withdrawal whitelist addresses for a coin.
 
 ```bash
-deepcoin-cli withdrawal addresses --ccy USDT
+dcli withdrawal addresses --ccy USDT
 ```
 
 ### `withdrawal records`
@@ -519,8 +519,8 @@ deepcoin-cli withdrawal addresses --ccy USDT
 List withdrawal records.
 
 ```bash
-deepcoin-cli withdrawal records --coin USDT --page 1 --size 20
-deepcoin-cli withdrawal records --wd-id 123456
+dcli withdrawal records --coin USDT --page 1 --size 20
+dcli withdrawal records --wd-id 123456
 ```
 
 ### `withdrawal status`
@@ -528,7 +528,7 @@ deepcoin-cli withdrawal records --wd-id 123456
 Get a single withdrawal status.
 
 ```bash
-deepcoin-cli withdrawal status --wd-id 123456 --ccy USDT
+dcli withdrawal status --wd-id 123456 --ccy USDT
 ```
 
 ### `withdrawal create`
@@ -536,7 +536,7 @@ deepcoin-cli withdrawal status --wd-id 123456 --ccy USDT
 Create an on-chain withdrawal.
 
 ```bash
-deepcoin-cli withdrawal create \
+dcli withdrawal create \
   --ccy USDT \
   --chain USDT-TRC20 \
   --amt 10 \
@@ -549,7 +549,7 @@ deepcoin-cli withdrawal create \
 Cancel an on-chain withdrawal.
 
 ```bash
-deepcoin-cli withdrawal cancel --wd-id 123456 --ccy USDT
+dcli withdrawal cancel --wd-id 123456 --ccy USDT
 ```
 
 ---
@@ -563,7 +563,7 @@ All commands require authentication.
 Update leader settings.
 
 ```bash
-deepcoin-cli copytrade leader-settings --status 1
+dcli copytrade leader-settings --status 1
 ```
 
 ### `copytrade support-contracts`
@@ -575,7 +575,7 @@ Get supported copy trading contracts.
 Set copy trading contracts.
 
 ```bash
-deepcoin-cli copytrade set-contracts --contracts "BTCUSDT,ETHUSDT"
+dcli copytrade set-contracts --contracts "BTCUSDT,ETHUSDT"
 ```
 
 ### `copytrade followers`
@@ -583,7 +583,7 @@ deepcoin-cli copytrade set-contracts --contracts "BTCUSDT,ETHUSDT"
 Get follower list and stats.
 
 ```bash
-deepcoin-cli copytrade followers --status 1
+dcli copytrade followers --status 1
 ```
 
 ### `copytrade leader-positions`
@@ -599,7 +599,7 @@ Get current position type (hedge/one-way).
 Update position type.
 
 ```bash
-deepcoin-cli copytrade set-position-type --type 1  # Hedge mode
+dcli copytrade set-position-type --type 1  # Hedge mode
 ```
 
 ### `copytrade estimated-profit`
@@ -622,14 +622,14 @@ Run a strategy backtest.
 
 ```bash
 # From file
-deepcoin-cli strategy backtest \
+dcli strategy backtest \
   --symbol BTC-USDT-SWAP \
   --from-ts 2025-01-01T00:00:00Z \
   --to-ts 2025-03-01T00:00:00Z \
   --dsl @my_strategy.json
 
 # Inline JSON
-deepcoin-cli strategy backtest \
+dcli strategy backtest \
   --symbol BTC-USDT-SWAP \
   --from-ts 2025-01-01T00:00:00Z \
   --to-ts 2025-03-01T00:00:00Z \
@@ -652,7 +652,7 @@ deepcoin-cli strategy backtest \
 Place a live DSL-driven trigger order.
 
 ```bash
-deepcoin-cli strategy dsl-trigger-order \
+dcli strategy dsl-trigger-order \
   --symbol BTC-USDT-SWAP \
   --trade-mode isolated \
   --mrg-position merge \
