@@ -8,7 +8,9 @@ import (
 	"github.com/deepcoinapi/agent-cli/cmd/copytrade"
 	"github.com/deepcoinapi/agent-cli/cmd/market"
 	"github.com/deepcoinapi/agent-cli/cmd/strategy"
+	"github.com/deepcoinapi/agent-cli/cmd/tools"
 	"github.com/deepcoinapi/agent-cli/cmd/trade"
+	"github.com/deepcoinapi/agent-cli/cmd/withdrawal"
 )
 
 var rootCmd = &cobra.Command{
@@ -21,8 +23,10 @@ func init() {
 	rootCmd.AddCommand(market.Cmd)
 	rootCmd.AddCommand(trade.Cmd)
 	rootCmd.AddCommand(account.Cmd)
+	rootCmd.AddCommand(withdrawal.Cmd)
 	rootCmd.AddCommand(copytrade.Cmd)
 	rootCmd.AddCommand(strategy.Cmd)
+	rootCmd.AddCommand(tools.ListToolsCmd)
 }
 
 // Execute runs the root command.

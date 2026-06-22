@@ -26,19 +26,21 @@ type Client struct {
 
 // New creates a Client from environment variables or explicit values.
 func New() *Client {
-	base := envOr("DEEPCOIN_BASE_URL", "https://api.deepcoin.com")
+	base := envOrAny("https://api.deepcoin.com", "DEEPCOIN_BASE_URL", "DC_BASE_URL")
 	return &Client{
-		APIKey:     os.Getenv("DEEPCOIN_API_KEY"),
-		SecretKey:  os.Getenv("DEEPCOIN_SECRET_KEY"),
-		Passphrase: os.Getenv("DEEPCOIN_PASSPHRASE"),
+		APIKey:     envOrAny("", "DEEPCOIN_API_KEY", "DC_API_KEY"),
+		SecretKey:  envOrAny("", "DEEPCOIN_SECRET_KEY", "DC_SECRET_KEY"),
+		Passphrase: envOrAny("", "DEEPCOIN_PASSPHRASE", "DC_PASSPHRASE"),
 		BaseURL:    strings.TrimRight(base, "/"),
 		http:       &http.Client{Timeout: 30 * time.Second},
 	}
 }
 
-func envOr(key, fallback string) string {
-	if v := os.Getenv(key); v != "" {
-		return v
+func envOrAny(fallback string, keys ...string) string {
+	for _, key := range keys {
+		if v := os.Getenv(key); v != "" {
+			return v
+		}
 	}
 	return fallback
 }

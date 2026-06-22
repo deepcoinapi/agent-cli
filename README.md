@@ -7,8 +7,17 @@ Command-line tool for interacting with the [DeepCoin](https://api.deepcoin.com) 
 - **Market Data** — tickers, orderbook, candles, trades, funding rates
 - **Trading** — place/cancel/amend orders, trigger orders, TP/SL, batch operations
 - **Account** — balances, positions, leverage, bills, sub-accounts, asset transfers
+- **Withdrawal** — on-chain withdrawal config, whitelist, create, cancel, status, records
 - **Copy Trading** — leader/follower management, position tracking, profit stats
 - **Strategy** — DSL-based automated trading with backtesting
+
+## Agent-Skill Contract
+
+`deepcoin-cli` is the stable execution layer for Deepcoin agent skills.
+
+- Use `deepcoin-cli list-tools` for a machine-readable command inventory.
+- Agent skills should call CLI commands instead of generating temporary API clients or signing scripts.
+- If a Deepcoin API workflow is not represented here, add a stable CLI command first, then reference it from the skill.
 
 ## Installation
 
@@ -34,6 +43,8 @@ export DEEPCOIN_SECRET_KEY=your-secret-key
 export DEEPCOIN_PASSPHRASE=your-passphrase
 export DEEPCOIN_BASE_URL=https://api.deepcoin.com  # optional
 ```
+
+The CLI also accepts `DC_API_KEY`, `DC_SECRET_KEY`, `DC_PASSPHRASE`, and `DC_BASE_URL` as compatibility aliases.
 
 Or copy `.env.example` to `.env` and fill in your credentials.
 
@@ -78,8 +89,10 @@ deepcoin-cli strategy backtest \
 | `market` | Public market data (no auth required) |
 | `trade` | Order management (auth required) |
 | `account` | Account, positions, assets, sub-accounts (auth required) |
+| `withdrawal` | On-chain withdrawal operations (auth required) |
 | `copytrade` | Copy trading management (auth required) |
 | `strategy` | DSL strategy orders & backtesting (auth required) |
+| `list-tools` | Machine-readable stable command inventory for agents |
 
 Run `deepcoin-cli <group> --help` to see all commands in a group.
 

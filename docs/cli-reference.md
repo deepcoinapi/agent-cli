@@ -11,6 +11,16 @@
 | `--version` | | Show version |
 | `--help` | | Show help |
 
+Compatibility aliases are also supported: `DC_API_KEY`, `DC_SECRET_KEY`, `DC_PASSPHRASE`, and `DC_BASE_URL`.
+
+## Agent Discovery
+
+```bash
+deepcoin-cli list-tools
+```
+
+Prints a machine-readable JSON inventory of stable commands for Deepcoin skills. Agents should use this command surface instead of assembling custom API scripts.
+
 ---
 
 ## `market` — Public Market Data
@@ -465,6 +475,82 @@ Get daily trade statistics.
 ### `account trade-stats-total`
 
 Get total trade statistics.
+
+---
+
+## `withdrawal` — On-Chain Withdrawals
+
+All commands require authentication. Confirm externally before `create` or `cancel`; the CLI intentionally executes the requested command directly.
+
+### `withdrawal config`
+
+Get aggregated withdrawal config, optionally including whitelist addresses.
+
+```bash
+deepcoin-cli withdrawal config --ccy USDT --include-addresses true
+```
+
+### `withdrawal assets`
+
+List withdrawable assets.
+
+```bash
+deepcoin-cli withdrawal assets --ccy USDT
+```
+
+### `withdrawal chains`
+
+List withdrawal chains for a coin.
+
+```bash
+deepcoin-cli withdrawal chains --ccy USDT
+```
+
+### `withdrawal addresses`
+
+List withdrawal whitelist addresses for a coin.
+
+```bash
+deepcoin-cli withdrawal addresses --ccy USDT
+```
+
+### `withdrawal records`
+
+List withdrawal records.
+
+```bash
+deepcoin-cli withdrawal records --coin USDT --page 1 --size 20
+deepcoin-cli withdrawal records --wd-id 123456
+```
+
+### `withdrawal status`
+
+Get a single withdrawal status.
+
+```bash
+deepcoin-cli withdrawal status --wd-id 123456 --ccy USDT
+```
+
+### `withdrawal create`
+
+Create an on-chain withdrawal.
+
+```bash
+deepcoin-cli withdrawal create \
+  --ccy USDT \
+  --chain USDT-TRC20 \
+  --amt 10 \
+  --address-id 123456 \
+  --account-types funding
+```
+
+### `withdrawal cancel`
+
+Cancel an on-chain withdrawal.
+
+```bash
+deepcoin-cli withdrawal cancel --wd-id 123456 --ccy USDT
+```
 
 ---
 
