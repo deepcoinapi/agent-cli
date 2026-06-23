@@ -384,6 +384,21 @@ dcli account balance --inst-type SWAP --ccy USDT
 | `--inst-type` | No | `SPOT` or `SWAP` |
 | `--ccy` | No | Currency filter (e.g. `USDT`) |
 
+### `account all-balances`
+
+Get unified balances across Deepcoin account types.
+
+```bash
+dcli account all-balances
+dcli account all-balances --account-type funding,spot,swapU --ccy USDT,BTC --json
+```
+
+| Option | Required | Description |
+|--------|----------|-------------|
+| `--account-type` | No | Comma-separated account types: `funding`, `spot`, `swapU`, `swap`, `bonus`, `rebate`, `event`, `copyTrade`, `robot`, `all` |
+| `--ccy` | No | Currency filter; comma-separated values are supported (e.g. `USDT,BTC`) |
+| `--json` | No | Output raw JSON |
+
 ### `account positions`
 
 Get open positions.

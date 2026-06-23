@@ -18,6 +18,7 @@ var Cmd = &cobra.Command{
 
 func init() {
 	Cmd.AddCommand(balanceCmd)
+	Cmd.AddCommand(allBalancesCmd)
 	Cmd.AddCommand(positionsCmd)
 	Cmd.AddCommand(billsCmd)
 	Cmd.AddCommand(setLeverageCmd)
@@ -91,6 +92,97 @@ func init() {
 	balanceCmd.Flags().String("inst-type", "", "Instrument type: SPOT/SWAP")
 	balanceCmd.Flags().String("ccy", "", "Currency filter (e.g. USDT)")
 	balanceCmd.Flags().Bool("json", false, "Output raw JSON")
+}
+
+var allBalancesCmd = &cobra.Command{
+	Use:   "all-balances",
+	Short: "Get unified account balances",
+	RunE: func(cmd *cobra.Command, args []string) error {
+		accountType, _ := cmd.Flags().GetString("account-type")
+		ccy, _ := cmd.Flags().GetString("ccy")
+		asJSON, _ := cmd.Flags().GetBool("json")
+
+		params := map[string]string{}
+		if accountType != "" {
+			params["accountType"] = accountType
+		}
+		if ccy != "" {
+			params["ccy"] = ccy
+		}
+
+		c := client.New()
+		resp, err := c.Get("/deepcoin/account/all-balances", params)
+		if err != nil {
+			return err
+		}
+		if asJSON {
+			output.JSON(resp)
+			return nil
+		}
+
+		data := client.GetDataMap(resp)
+		if summary, ok := data["summary"].(map[string]any); ok {
+			output.Table([]map[string]any{summary},
+				[]string{"totalEqUsd", "totalAvailBalByCcy"},
+				[]string{"Total Equity USD", "Total Available By Currency"},
+			)
+			fmt.Println()
+		}
+
+		rows := flattenAllBalanceRows(data)
+		output.Table(rows,
+			[]string{"accountType", "accountName", "ccy", "bal", "availBal", "frozenBal", "unrealizedProfit", "equity", "eqUsd"},
+			[]string{"Account Type", "Account", "Currency", "Balance", "Available", "Frozen", "Unrealized P&L", "Equity", "Equity USD"},
+		)
+		return nil
+	},
+}
+
+func init() {
+	allBalancesCmd.Flags().String("account-type", "", "Account type filter: funding,spot,swapU,swap,bonus,rebate,event,copyTrade,robot,all")
+	allBalancesCmd.Flags().String("ccy", "", "Currency filter; comma-separated values are supported (e.g. USDT,BTC)")
+	allBalancesCmd.Flags().Bool("json", false, "Output raw JSON")
+}
+
+func flattenAllBalanceRows(data map[string]any) []map[string]any {
+	accounts, _ := data["accounts"].([]any)
+	rows := make([]map[string]any, 0)
+	for _, account := range accounts {
+		accountMap, ok := account.(map[string]any)
+		if !ok {
+			continue
+		}
+		details, _ := accountMap["details"].([]any)
+		if len(details) == 0 {
+			rows = append(rows, map[string]any{
+				"accountType": accountMap["accountType"],
+				"accountName": accountMap["accountName"],
+			})
+			continue
+		}
+		for _, detail := range details {
+			detailMap, ok := detail.(map[string]any)
+			if !ok {
+				continue
+			}
+			row := map[string]any{
+				"accountType": accountMap["accountType"],
+				"accountName": accountMap["accountName"],
+				"ccy":         detailMap["ccy"],
+				"bal":         detailMap["bal"],
+				"availBal":    detailMap["availBal"],
+				"frozenBal":   detailMap["frozenBal"],
+				"equity":      detailMap["equity"],
+				"eqUsd":       detailMap["eqUsd"],
+				"uTime":       detailMap["uTime"],
+			}
+			if v, ok := detailMap["unrealizedProfit"]; ok {
+				row["unrealizedProfit"] = v
+			}
+			rows = append(rows, row)
+		}
+	}
+	return rows
 }
 
 var positionsCmd = &cobra.Command{

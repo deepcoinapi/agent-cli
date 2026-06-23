@@ -67,7 +67,10 @@ dcli market ping
 # Get BTC ticker
 dcli market ticker BTC-USDT-SWAP
 
-# Get account balance
+# Get unified account balances
+dcli account all-balances --json
+
+# Get trading account balance
 dcli account balance --inst-type SWAP
 
 # Place a limit order

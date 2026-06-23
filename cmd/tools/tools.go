@@ -70,6 +70,7 @@ var commandSpecs = []commandSpec{
 	{"deepcoin-trade", "trade", "dcli trade trace-orders [--json]", "List pending trace orders", "required", "READ"},
 
 	{"deepcoin-portfolio", "account", "dcli account balance [--inst-type <SPOT|SWAP>] [--ccy <ccy>] [--json]", "Get account balance", "required", "READ"},
+	{"deepcoin-portfolio", "account", "dcli account all-balances [--account-type <types>] [--ccy <ccys>] [--json]", "Get unified account balances", "required", "READ"},
 	{"deepcoin-portfolio", "account", "dcli account positions [--inst-type <SPOT|SWAP>] [--inst-id <id>] [--json]", "Get positions", "required", "READ"},
 	{"deepcoin-portfolio", "account", "dcli account bills --inst-type <SPOT|SWAP> [flags] [--json]", "Get account bills", "required", "READ"},
 	{"deepcoin-portfolio", "account", "dcli account set-leverage --inst-id <id> --lever <n> --mgn-mode <cross|isolated> [--mrg-position <merge|split>]", "Set leverage", "required", "WRITE"},
