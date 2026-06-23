@@ -16,7 +16,7 @@ import (
 var rootCmd = &cobra.Command{
 	Use:     "dcli",
 	Short:   "DeepCoin Agent CLI — interact with DeepCoin exchange",
-	Version: "0.1.1",
+	Version: "0.1.3",
 }
 
 func init() {
